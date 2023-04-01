@@ -26,6 +26,9 @@ public class HomePage {
     @FindBy(how= How.XPATH, using = "//input[@id=\"modelheader\"]")
     public WebElement add_Vehicle_Model;
 
+    @FindBy(how= How.XPATH, using = "//input[@data-testid=\"desktop-search-input\"]")
+    public WebElement search_Vehicle_Parts;
+
     public void clickOnAddVehilcle()
     {
         add_Vehicle.click();
@@ -40,6 +43,13 @@ public class HomePage {
         add_Vehicle_Make.sendKeys(Keys.TAB);
         add_Vehicle_Model.sendKeys(vehicleModel);
         add_Vehicle_Model.sendKeys(Keys.TAB);
+
+    }
+
+    public void searchVehicleParts(String partsDetail)
+    {
+        search_Vehicle_Parts.sendKeys(partsDetail);
+//        search_Vehicle_Parts.sendKeys(Keys.TAB);
 
     }
 }

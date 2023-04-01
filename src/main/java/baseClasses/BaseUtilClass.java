@@ -56,10 +56,16 @@ public class BaseUtilClass
 
     }
 
-    public static void waitForElementVisible(String elementLocator)
+    public static void waitForElementVisible(WebElement elementLocator)
     {
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds (30));
-        WebElement ele= wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(elementLocator)));
+        WebElement ele= wait.until(ExpectedConditions.visibilityOfElementLocated((By) elementLocator));
+
+    }
+
+    public static void implicitWait()
+    {
+        driver.manage().timeouts().implicitlyWait(2000, TimeUnit.MILLISECONDS);
 
     }
 
