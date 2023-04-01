@@ -9,6 +9,7 @@ import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import javax.swing.border.TitledBorder;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -21,6 +22,7 @@ public class BaseUtilClass
     public static WebDriver driver;
     public static Properties config = new Properties();
     public static FileInputStream fis;
+
 
     public static void openSeleniumBrowser() throws IOException {
         String chromeDriverPath= System.getProperty("user.dir")+"/drivers/chromedriver.exe";
@@ -48,6 +50,7 @@ public class BaseUtilClass
 
         driver.get(config.getProperty("SiteURL"));
         driver.manage().window().maximize();
+        driver.manage().deleteAllCookies();
         driver.manage().timeouts().pageLoadTimeout(60L, TimeUnit.SECONDS);
         driver.manage().timeouts().implicitlyWait(30L,TimeUnit.SECONDS);
 
