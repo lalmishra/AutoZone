@@ -1,15 +1,18 @@
 package baseClasses;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
-import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import org.testng.Reporter;
+import org.testng.annotations.AfterClass;
+import org.testng.annotations.BeforeClass;
 
-import javax.swing.border.TitledBorder;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -56,16 +59,42 @@ public class BaseUtilClass
 
     }
 
-    public static void waitForElementVisible(WebElement elementLocator)
+    public static void waitForElementVisible(WebElement elementLocator, int timeout)
     {
-        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds (30));
-        WebElement ele= wait.until(ExpectedConditions.visibilityOfElementLocated((By) elementLocator));
 
+        new WebDriverWait(driver, Duration.ofSeconds(timeout)).ignoring(StaleElementReferenceException.class).until(ExpectedConditions.elementToBeClickable(elementLocator));
+        elementLocator.click();
     }
 
     public static void implicitWait()
     {
         driver.manage().timeouts().implicitlyWait(2000, TimeUnit.MILLISECONDS);
+
+    }
+
+    public static void selectDropDown(WebElement locator,String state)
+    {
+        Select select = new Select(locator);
+        select.selectByVisibleText(state);
+    }
+
+    @BeforeClass
+    public void setupApplication()
+    {
+
+        Reporter.log("=====Browser Session Started=====", true);
+
+
+
+        Reporter.log("=====Application Started=====", true);
+    }
+
+
+    @AfterClass
+    public void closeApplication()
+    {
+
+        Reporter.log("=====Browser Session End=====", true);
 
     }
 

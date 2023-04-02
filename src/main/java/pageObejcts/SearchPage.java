@@ -34,35 +34,46 @@ public class SearchPage extends BaseUtilClass {
     @FindBy(how= How.XPATH, using = "//div[text()=\"CHECKOUT\"]")
     public WebElement Checkout_Button;
 
+    @FindBy(how= How.XPATH, using = "//*[text()='Not Available']")
+    public WebElement itemNotAvailable;
+
 
 
     public void clickOnFirstSearchResults()
     {
-//        implicitWait();
-//        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(2));
-//        wait.until(ExpectedConditions.visibilityOfElementLocated((By) search_Result_FirstItem));
 
-        search_Result_FirstItem.click();
+         waitForElementVisible(search_Result_FirstItem,10);
+
 
     }
     public void clickOnAddToCartButton()
     {
 
-            implicitWait();
-            add_To_Cart_Button.click();
+        waitForElementVisible(add_To_Cart_Button,10);
+
 
     }
     public void clickOnViewCartAndCheckoutButton()
     {
+        try {
+            if (itemNotAvailable.isDisplayed()) {
+                System.out.println("Item is not available");
+                System.exit(0);
+            }
+        }
+        catch (Exception e)
+        {
+            waitForElementVisible(view_cart_and_checkout_button, 10);
+        }
 
-        implicitWait();
-        view_cart_and_checkout_button.click();
+
+
 
     }
     public void clickOnCheckoutButton()
     {
 
-        implicitWait();
+
         Checkout_Button.click();
 
     }
