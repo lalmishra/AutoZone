@@ -1,0 +1,14 @@
+<suite name="MultiBrowserSuite" parallel="tests" thread-count="2">
+    <test name="TestFirefox">
+        <parameter name="browser" value="Firefox"/>
+        <classes>
+            <class name="testRunnerClasses.CheckoutWithValidCardDetails"/>
+        </classes>
+    </test>
+    <test name="TestChrome">
+        <parameter name="browser" value="Chrome"/>
+        <classes>
+            <class name="testRunnerClasses.CheckoutWithValidCardDetails"/>
+        </classes>
+    </test>
+</suite>

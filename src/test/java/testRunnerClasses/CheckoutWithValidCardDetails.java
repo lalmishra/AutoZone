@@ -3,6 +3,7 @@ package testRunnerClasses;
 import baseClasses.BaseUtilClass;
 import org.openqa.selenium.support.PageFactory;
 import org.testng.annotations.Listeners;
+import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 import pageObejcts.CheckoutPage;
 import pageObejcts.HomePage;
@@ -13,9 +14,10 @@ import java.io.IOException;
 @Listeners(listeners.Listeners.class)
 public class CheckoutWithValidCardDetails {
 
+    @Parameters("browser")
     @Test(description="This TC will perform valid login")
-    public void checkoutWithValidCreditCard() throws IOException {
-        BaseUtilClass.openSeleniumBrowser();
+    public void checkoutWithValidCreditCard(String browser) throws IOException {
+        BaseUtilClass.openSeleniumBrowser(browser);
         HomePage homeObj = PageFactory.initElements(BaseUtilClass.driver,HomePage.class);
         SearchPage searchObj = PageFactory.initElements(BaseUtilClass.driver,SearchPage.class);
         CheckoutPage checkoutObj = PageFactory.initElements(BaseUtilClass.driver,CheckoutPage.class);

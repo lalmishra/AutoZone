@@ -5,7 +5,10 @@ import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.firefox.FirefoxOptions;
+import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -17,6 +20,8 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.time.Duration;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Properties;
 import java.util.concurrent.TimeUnit;
 
@@ -27,7 +32,7 @@ public class BaseUtilClass
     public static FileInputStream fis;
 
 
-    public static void openSeleniumBrowser() throws IOException {
+    public static void openSeleniumBrowser(String browser) throws IOException {
         String chromeDriverPath= System.getProperty("user.dir")+"/drivers/chromedriver.exe";
         String fireFoxDriverPath= System.getProperty("user.dir")+"/drivers/geckodriver.exe";
 
@@ -39,16 +44,28 @@ public class BaseUtilClass
 
         config.load(fis);
 
-        if(config.getProperty("Browser").equalsIgnoreCase("chrome"))
+        if(browser.equalsIgnoreCase("chrome"))
         {
             System.setProperty("webdriver.chrome.driver",chromeDriverPath);
-            driver=new ChromeDriver();
-        }
-        else if(config.getProperty("Browser").equalsIgnoreCase("firefox"))
-        {
-            System.setProperty("webdriver.gecko.driver",fireFoxDriverPath);
+            ChromeOptions options = new ChromeOptions();
+            options.addArguments("--start-maximized");
+            options.addArguments("--disable-web-security");
+            options.addArguments("--no-proxy-server");
 
-            driver= new FirefoxDriver();
+            Map<String, Object> prefs = new HashMap<String, Object>();
+            prefs.put("credentials_enable_service", false);
+            prefs.put("profile.password_manager_enabled", false);
+
+            options.setExperimentalOption("prefs", prefs);
+            driver=new ChromeDriver(options);
+        }
+        else if(browser.equalsIgnoreCase("firefox"))
+        {
+//            System.setProperty("webdriver.gecko.driver",fireFoxDriverPath);
+            FirefoxOptions options = new FirefoxOptions();
+            options.setBinary(fireFoxDriverPath);
+
+            driver= new FirefoxDriver(options);
         }
 
         driver.get(config.getProperty("SiteURL"));

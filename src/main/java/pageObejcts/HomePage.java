@@ -6,6 +6,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.How;
+import org.testng.Reporter;
 
 public class HomePage {
 
@@ -37,12 +38,14 @@ public class HomePage {
 
     public void addVehicleDetails(String vehicleYear,String vehicleMake, String vehicleModel)
     {
+        Reporter.log("Adding vehicle details");
         add_Vehicle_Year.sendKeys(vehicleYear);
         add_Vehicle_Year.sendKeys(Keys.TAB);
         add_Vehicle_Make.sendKeys(vehicleMake);
         add_Vehicle_Make.sendKeys(Keys.TAB);
         add_Vehicle_Model.sendKeys(vehicleModel);
         add_Vehicle_Model.sendKeys(Keys.TAB);
+        Reporter.log("Vehicle details added");
 
     }
 
